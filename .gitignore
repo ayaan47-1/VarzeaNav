@@ -10,3 +10,5 @@ backend/cache/stats.json
 .coverage
 .pytest_cache/
 htmlcov/
+test-results/
+playwright-report/
