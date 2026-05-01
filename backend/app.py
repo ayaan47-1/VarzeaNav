@@ -7,6 +7,7 @@ steps.
 from __future__ import annotations
 
 import logging
+import os
 import sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -76,9 +77,14 @@ def verify_monthly_tiles() -> dict:
 app = Flask(__name__, static_folder=None)
 CORS(app)
 
-# Run startup checks once at import time so they show in the boot log
-TILE_AVAILABILITY = verify_monthly_tiles()
-jrc_data.load_all()
+# Run startup checks once at import time so they show in the boot log.
+# Tests set AMAZON_NAV_DEFER_INIT=1 to skip these (they hit the network and
+# load ~470 MB of tiles); tests inject their own state via monkeypatching.
+if os.environ.get("AMAZON_NAV_DEFER_INIT") == "1":
+    TILE_AVAILABILITY = {"available": [], "missing": []}
+else:
+    TILE_AVAILABILITY = verify_monthly_tiles()
+    jrc_data.load_all()
 
 
 @app.route("/route")
