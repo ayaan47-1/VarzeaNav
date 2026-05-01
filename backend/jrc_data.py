@@ -13,7 +13,7 @@ from pathlib import Path
 import numpy as np
 import rasterio
 import requests
-from rasterio.transform import Affine, xy
+from rasterio.transform import Affine
 from rasterio.windows import Window, bounds as window_bounds
 
 log = logging.getLogger("jrc")
@@ -129,9 +129,11 @@ def classify(month: int) -> np.ndarray:
 
 
 def mid_lat() -> float:
-    """Geographic midpoint latitude of the loaded crop (for corridor labels)."""
-    if TRANSFORM is None or SHAPE is None:
+    """Geographic midpoint latitude of the loaded crop (for corridor labels).
+
+    Uses BOUNDS so the result is the exact geographic midpoint, not the
+    center of the row=h//2 cell (which is off by half a pixel).
+    """
+    if BOUNDS is None:
         raise RuntimeError("not loaded")
-    h, w = SHAPE
-    _, lat = xy(TRANSFORM, h // 2, w // 2)
-    return float(lat)
+    return (BOUNDS[1] + BOUNDS[3]) / 2
