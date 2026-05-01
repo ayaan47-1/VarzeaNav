@@ -25,9 +25,13 @@ sys.path.insert(0, str(BACKEND_DIR))
 
 # Defer the heavyweight init in app.py — the tests inject their own state.
 os.environ.setdefault("AMAZON_NAV_DEFER_INIT", "1")
-# Make absolutely sure no test ever calls live Claude. Individual tests can
-# unset this, but they must explicitly mock the client when they do.
-os.environ.pop("ANTHROPIC_API_KEY", None)
+# Make absolutely sure no test ever calls live Claude. Setting the key to
+# the empty string (not just popping it) prevents advisory.py's load_dotenv()
+# from re-populating it at import time: load_dotenv defaults to override=False,
+# so a present-but-empty value wins over the .env file. The fresh_advisory
+# fixture in test_advisory.py also resets _CLIENT to None so a stale instance
+# from a previous test can't slip through.
+os.environ["ANTHROPIC_API_KEY"] = ""
 
 
 BASE_URL = os.environ.get("FRONTEND_E2E_BASE_URL", "http://localhost:5050")
