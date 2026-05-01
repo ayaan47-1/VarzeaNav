@@ -7,3 +7,8 @@ backend/cache/*.tif
 backend/cache/*.png
 backend/cache/stats.json
 .DS_Store
+.coverage
+.pytest_cache/
+htmlcov/
+test-results/
+playwright-report/
