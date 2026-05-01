@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Amazon River Navigation — Manaus</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin="" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div id="map"></div>
+
+  <aside id="sidebar">
+    <h1>Amazon River Navigation</h1>
+    <div id="month-label">Loading…</div>
+    <div id="advisory">Move the slider to query the JRC Global Surface Water dataset for the selected month.</div>
+    <div id="legend">
+      <div><span class="swatch swatch-perm"></span>Permanent water</div>
+      <div><span class="swatch swatch-active"></span>Seasonal — active</div>
+      <div><span class="swatch swatch-inactive"></span>Seasonal — inactive</div>
+    </div>
+    <button id="recenter">Center on Manaus</button>
+  </aside>
+
+  <div id="slider-bar">
+    <input type="range" id="month-slider" min="1" max="12" step="1" value="3" />
+    <div id="slider-ticks">
+      <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span>
+      <span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span>
+      <span>Nov</span><span>Dec</span>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+          crossorigin=""></script>
+  <script src="/app.js"></script>
+</body>
+</html>

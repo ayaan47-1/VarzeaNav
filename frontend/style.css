@@ -1,0 +1,71 @@
+/* Step 9: clean, legible polish. No fancy theming — utilitarian. */
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  color: #1c1c1c;
+}
+
+#map { position: absolute; top: 0; left: 0; right: 320px; bottom: 72px; background: #1a1a1a; }
+
+#sidebar {
+  position: absolute; top: 0; right: 0; bottom: 0; width: 320px;
+  padding: 18px 18px 80px; background: #fafafa; border-left: 1px solid #d8d8d8;
+  overflow-y: auto; z-index: 401;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.06);
+}
+#sidebar h1 {
+  font-size: 17px; font-weight: 700; margin: 0 0 14px;
+  letter-spacing: -0.01em;
+}
+#month-label {
+  font-size: 13px; font-weight: 600; color: #0d47a1;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  margin-bottom: 10px;
+}
+#advisory {
+  font-size: 14px; line-height: 1.5; min-height: 90px;
+  padding: 12px; background: #fff; border: 1px solid #e3e3e3;
+  border-radius: 4px;
+}
+
+#legend { margin-top: 18px; font-size: 13px; color: #444; }
+#legend > div { margin-bottom: 6px; display: flex; align-items: center; }
+.swatch {
+  display: inline-block; width: 14px; height: 14px;
+  margin-right: 8px; border-radius: 2px;
+}
+.swatch-perm     { background: #0d47a1; }
+.swatch-active   { background: #4fc3f7; }
+.swatch-inactive { background: #888; }
+
+#recenter {
+  margin-top: 14px; padding: 8px 14px; cursor: pointer;
+  border: 1px solid #0d47a1; background: #fff; color: #0d47a1;
+  font-size: 13px; font-weight: 600; border-radius: 4px;
+}
+#recenter:hover { background: #0d47a1; color: #fff; }
+
+#slider-bar {
+  position: absolute; bottom: 0; left: 0; right: 320px; height: 72px;
+  padding: 14px 24px 8px; background: #fff; border-top: 1px solid #d8d8d8;
+  z-index: 400;
+}
+#month-slider {
+  width: 100%; height: 6px; -webkit-appearance: none; appearance: none;
+  background: #e3e3e3; border-radius: 3px; outline: none; margin: 0;
+}
+#month-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: #0d47a1; cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+#month-slider::-moz-range-thumb {
+  width: 22px; height: 22px; border-radius: 50%; border: 0;
+  background: #0d47a1; cursor: pointer;
+}
+#slider-ticks {
+  display: flex; justify-content: space-between; padding: 0 4px;
+  font-size: 11px; color: #777; margin-top: 8px;
+  font-variant: small-caps; letter-spacing: 0.04em;
+}

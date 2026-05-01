@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "amazon-nav",
+      "runtimeExecutable": ".venv/bin/python",
+      "runtimeArgs": ["backend/app.py"],
+      "port": 5050
+    }
+  ]
+}
