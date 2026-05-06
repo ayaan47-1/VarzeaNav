@@ -320,6 +320,24 @@ document.getElementById("recenter").addEventListener("click", () => {
 
 slider.addEventListener("input", onSliderChange);
 
+// Theme toggle — shares localStorage.theme with the landing site so a visitor
+// who picks dark mode there stays in dark when they hit the demo.
+const themeToggle = document.getElementById("theme-toggle");
+if (themeToggle) {
+  const syncPressed = () => {
+    themeToggle.setAttribute(
+      "aria-pressed",
+      document.documentElement.classList.contains("dark") ? "true" : "false"
+    );
+  };
+  syncPressed();
+  themeToggle.addEventListener("click", () => {
+    const isDark = document.documentElement.classList.toggle("dark");
+    try { localStorage.setItem("theme", isDark ? "dark" : "light"); } catch (e) {}
+    syncPressed();
+  });
+}
+
 (async () => {
   await fetchInit();
   const month = parseInt(slider.value, 10);
