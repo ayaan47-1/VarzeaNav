@@ -18,3 +18,7 @@ site/node_modules/
 site/dist/
 site/.vite/
 site/.env.local
+
+Proto_code.ipynb
+
+frontend/varzeanav_landing_prompt.md

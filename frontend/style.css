@@ -1,71 +1,527 @@
-/* Step 9: clean, legible polish. No fancy theming — utilitarian. */
-* { box-sizing: border-box; }
-html, body { height: 100%; margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  color: #1c1c1c;
+/* Amazon River Navigation — minimal-scientific polish.
+ *
+ * Single accent color; system font for prose, mono for numerics; generous
+ * whitespace; no shadows beyond the existing sidebar drop shadow; CSS fade
+ * transitions only.
+ */
+
+:root {
+  --accent:        #0d47a1;
+  --accent-hover:  #1565c0;
+  --bg:            #fafafa;
+  --bg-card:       #ffffff;
+  --bg-card-soft:  #f3f4f6;
+  --border:        #e3e3e3;
+  --border-soft:   #ebebeb;
+  --text:          #1c1c1c;
+  --text-muted:    #5b6168;
+  --text-faint:    #8a8f96;
+  --perm:          #0d47a1;
+  --active:        #4fc3f7;
+  --inactive:      #b6bdc4;
+
+  --font-prose: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono:  ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  --sidebar-w: 360px;
+  --slider-h:  92px;
 }
 
-#map { position: absolute; top: 0; left: 0; right: 320px; bottom: 72px; background: #1a1a1a; }
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: var(--font-prose);
+  color: var(--text);
+  background: #fff;
+}
+
+#map {
+  position: absolute;
+  top: 0; left: 0;
+  right: var(--sidebar-w);
+  bottom: var(--slider-h);
+  background: #1a1a1a;
+}
+
+/* Sidebar ------------------------------------------------------------- */
 
 #sidebar {
-  position: absolute; top: 0; right: 0; bottom: 0; width: 320px;
-  padding: 18px 18px 80px; background: #fafafa; border-left: 1px solid #d8d8d8;
-  overflow-y: auto; z-index: 401;
-  box-shadow: -2px 0 8px rgba(0,0,0,0.06);
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: var(--sidebar-w);
+  padding: 22px 22px calc(var(--slider-h) + 16px);
+  background: var(--bg);
+  border-left: 1px solid var(--border);
+  overflow-y: auto;
+  z-index: 401;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.06);
 }
-#sidebar h1 {
-  font-size: 17px; font-weight: 700; margin: 0 0 14px;
-  letter-spacing: -0.01em;
+
+#project-mark {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 18px;
 }
-#month-label {
-  font-size: 13px; font-weight: 600; color: #0d47a1;
-  text-transform: uppercase; letter-spacing: 0.05em;
-  margin-bottom: 10px;
+
+/* Generic card ---------------------------------------------------------- */
+
+.card {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
 }
-#advisory {
-  font-size: 14px; line-height: 1.5; min-height: 90px;
-  padding: 12px; background: #fff; border: 1px solid #e3e3e3;
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.card-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.model-chip {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: var(--bg-card-soft);
+  color: var(--text-muted);
+  user-select: text;
+}
+
+/* Why card -------------------------------------------------------------- */
+
+#why-card {
+  background: #fff8e1;
+  border-color: #f0d98a;
+}
+#why-card.dismissed {
+  display: none;
+}
+#why-card h2 {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8a6d00;
+  margin: 0 0 8px;
+}
+#why-card p {
+  margin: 0 0 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #4d3a00;
+}
+#why-card p.data-credit {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: #6e5400;
+}
+#why-card #why-dismiss {
+  position: absolute;
+  top: 6px; right: 8px;
+  width: 24px; height: 24px;
+  background: transparent;
+  border: 0;
+  font-size: 18px;
+  line-height: 1;
+  color: #8a6d00;
+  cursor: pointer;
   border-radius: 4px;
 }
-
-#legend { margin-top: 18px; font-size: 13px; color: #444; }
-#legend > div { margin-bottom: 6px; display: flex; align-items: center; }
-.swatch {
-  display: inline-block; width: 14px; height: 14px;
-  margin-right: 8px; border-radius: 2px;
+#why-card #why-dismiss:hover {
+  background: rgba(138, 109, 0, 0.1);
 }
-.swatch-perm     { background: #0d47a1; }
-.swatch-active   { background: #4fc3f7; }
-.swatch-inactive { background: #888; }
+
+/* Tooltip on the JRC mention */
+.tooltip {
+  position: relative;
+  border-bottom: 1px dotted #8a6d00;
+  cursor: help;
+}
+.tooltip .tooltip-body {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  left: 0; top: 100%;
+  margin-top: 6px;
+  width: 280px;
+  padding: 10px 12px;
+  background: #1c1c1c;
+  color: #fafafa;
+  font-size: 12px;
+  line-height: 1.45;
+  border-radius: 4px;
+  z-index: 10;
+  transition: opacity 120ms ease;
+  pointer-events: none;
+}
+.tooltip:hover .tooltip-body,
+.tooltip:focus .tooltip-body {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Big month label ------------------------------------------------------- */
+
+#month-label {
+  font-size: 34px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  text-transform: uppercase;
+  margin: 8px 0 14px;
+}
+
+/* Route card ------------------------------------------------------------ */
+
+#route-card {
+  transition: opacity 200ms ease;
+}
+#route-card.is-fading {
+  opacity: 0;
+}
+#route-length {
+  font-family: var(--font-mono);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  margin: 6px 0 12px;
+  line-height: 1;
+}
+#route-card.no-route #route-length {
+  color: #b85a5a;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: var(--font-prose);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Stacked bar showing % permanent vs % seasonal */
+#route-bar {
+  display: flex;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: #ebeef2;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+.route-bar-fill {
+  display: block;
+  height: 100%;
+  transition: flex 200ms ease;
+}
+.route-bar-perm { background: var(--perm); }
+.route-bar-seas { background: var(--active); }
+
+#route-bar-caption {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+  margin-bottom: 12px;
+}
+#route-bar-caption #route-pct-perm,
+#route-bar-caption #route-pct-seas {
+  color: var(--text);
+  font-weight: 600;
+}
+
+#advisory {
+  margin: 0;
+  font-size: 14px;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+/* Claude input details panel ------------------------------------------- */
+
+#claude-input-details {
+  margin: -2px 0 18px;
+  padding: 0 4px;
+}
+#claude-input-details summary {
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  cursor: pointer;
+  padding: 6px 0;
+  list-style: none;
+}
+#claude-input-details summary::-webkit-details-marker {
+  display: none;
+}
+#claude-input-details summary::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: 6px;
+  transition: transform 120ms ease;
+}
+#claude-input-details[open] summary::before {
+  transform: rotate(90deg);
+}
+#claude-input-details .hint {
+  font-size: 11px;
+  color: var(--text-faint);
+  margin: 6px 0 8px;
+}
+#claude-input-dl {
+  margin: 0;
+  padding: 10px 12px;
+  background: var(--bg-card-soft);
+  border: 1px solid var(--border-soft);
+  border-radius: 4px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  row-gap: 4px;
+  column-gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+#claude-input-dl dt {
+  margin: 0;
+  color: var(--text-muted);
+}
+#claude-input-dl dd {
+  margin: 0;
+  color: var(--text);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Legend ---------------------------------------------------------------- */
+
+#legend {
+  margin-top: 8px;
+}
+#legend h2 {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin: 0 0 8px;
+}
+.legend-row {
+  display: grid;
+  grid-template-columns: 16px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 0;
+  font-size: 13px;
+}
+.legend-label {
+  color: var(--text);
+}
+.legend-meta {
+  font-size: 11px;
+  color: var(--text-faint);
+}
+.swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+}
+.swatch-perm     { background: var(--perm); }
+.swatch-active   { background: var(--active); }
+.swatch-inactive { background: var(--inactive); }
+
+/* Line swatches for the route legend rows. 3px-thick line on a 14px tall
+ * grid cell so it visually occupies the same vertical space as the box
+ * swatches above. */
+.line-swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  position: relative;
+}
+.line-swatch::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 50%;
+  height: 3px;
+  margin-top: -1.5px;
+  background: var(--perm);
+  border-radius: 1.5px;
+}
+.line-swatch-seas::before {
+  background: linear-gradient(to right,
+    var(--perm) 0, var(--perm) 5px,
+    transparent 5px, transparent 9px,
+    var(--perm) 9px, var(--perm) 14px);
+}
+
+/* Waypoint label — small persistent tooltip rendered next to each pin on the
+ * map. Overrides Leaflet's default tooltip chrome to match the project chip
+ * style: white background, accent border, small caps text.
+ */
+.leaflet-tooltip.waypoint-label {
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--text);
+  border: 1px solid var(--accent);
+  border-radius: 3px;
+  padding: 2px 8px;
+  font-family: var(--font-prose);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+}
+.leaflet-tooltip.waypoint-label::before {
+  /* Tooltip arrow color matches the border. */
+  border-top-color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* Waypoint pin swatch — mirrors the L.circleMarker style: white core, accent ring. */
+.pin-swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  position: relative;
+}
+.pin-swatch::before {
+  content: "";
+  position: absolute;
+  left: 1px; top: 1px;
+  width: 12px; height: 12px;
+  background: #ffffff;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+/* Recenter button ------------------------------------------------------- */
 
 #recenter {
-  margin-top: 14px; padding: 8px 14px; cursor: pointer;
-  border: 1px solid #0d47a1; background: #fff; color: #0d47a1;
-  font-size: 13px; font-weight: 600; border-radius: 4px;
+  margin-top: 18px;
+  padding: 9px 14px;
+  cursor: pointer;
+  border: 1px solid var(--accent);
+  background: #fff;
+  color: var(--accent);
+  font-family: var(--font-prose);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 4px;
+  transition: background 120ms ease, color 120ms ease;
 }
-#recenter:hover { background: #0d47a1; color: #fff; }
+#recenter:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Slider bar ------------------------------------------------------------ */
 
 #slider-bar {
-  position: absolute; bottom: 0; left: 0; right: 320px; height: 72px;
-  padding: 14px 24px 8px; background: #fff; border-top: 1px solid #d8d8d8;
+  position: absolute;
+  bottom: 0; left: 0;
+  right: var(--sidebar-w);
+  height: var(--slider-h);
+  padding: 14px 28px 12px;
+  background: #fff;
+  border-top: 1px solid var(--border);
   z-index: 400;
 }
+#slider-readout {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  gap: 18px;
+}
+#slider-readout > div { white-space: nowrap; }
+#slider-readout #active-pct,
+#slider-readout #route-readout-value {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+#route-readout {
+  color: var(--text-muted);
+}
 #month-slider {
-  width: 100%; height: 6px; -webkit-appearance: none; appearance: none;
-  background: #e3e3e3; border-radius: 3px; outline: none; margin: 0;
+  width: 100%;
+  height: 6px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--border);
+  border-radius: 3px;
+  outline: none;
+  margin: 0;
 }
 #month-slider::-webkit-slider-thumb {
-  -webkit-appearance: none; appearance: none;
-  width: 22px; height: 22px; border-radius: 50%;
-  background: #0d47a1; cursor: pointer;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(13, 71, 161, 0.4);
 }
 #month-slider::-moz-range-thumb {
-  width: 22px; height: 22px; border-radius: 50%; border: 0;
-  background: #0d47a1; cursor: pointer;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 0;
+  background: var(--accent);
+  cursor: pointer;
 }
 #slider-ticks {
-  display: flex; justify-content: space-between; padding: 0 4px;
-  font-size: 11px; color: #777; margin-top: 8px;
-  font-variant: small-caps; letter-spacing: 0.04em;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 4px;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  color: var(--text-faint);
+  text-transform: uppercase;
+}
+
+/* Mobile-ish — sidebar slides up over the map at narrow widths.
+ * Demo will be filmed on desktop, so this is just a "doesn't break" guard.
+ */
+@media (max-width: 720px) {
+  :root { --sidebar-w: 0px; --slider-h: 96px; }
+  #sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+  #map { right: 0; bottom: var(--slider-h); }
+  #slider-bar { right: 0; }
 }

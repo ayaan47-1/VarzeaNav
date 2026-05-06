@@ -13,18 +13,103 @@
   <div id="map"></div>
 
   <aside id="sidebar">
-    <h1>Amazon River Navigation</h1>
-    <div id="month-label">Loading…</div>
-    <div id="advisory">Move the slider to query the JRC Global Surface Water dataset for the selected month.</div>
-    <div id="legend">
-      <div><span class="swatch swatch-perm"></span>Permanent water</div>
-      <div><span class="swatch swatch-active"></span>Seasonal — active</div>
-      <div><span class="swatch swatch-inactive"></span>Seasonal — inactive</div>
+    <div id="project-mark">Amazon River Navigation</div>
+
+    <div id="why-card" class="card">
+      <button id="why-dismiss" aria-label="Dismiss">×</button>
+      <h2>Why this exists</h2>
+      <p>
+        Seasonal flooding in the Amazon creates and destroys navigable routes
+        every year. Locals know them from memory. No digital map shows them.
+      </p>
+      <p class="data-credit">
+        Data:
+        <span class="tooltip">
+          JRC GSW v1.4 / Copernicus
+          <span class="tooltip-body">
+            Joint Research Centre Global Surface Water v1.4 — 30 m/pixel
+            satellite-derived water occurrence and monthly history,
+            1984–2021. Free, unrestricted use under the Copernicus
+            programme.
+          </span>
+        </span>
+      </p>
     </div>
+
+    <div id="month-label">Loading…</div>
+
+    <div id="route-card" class="card">
+      <div class="card-header">
+        <span class="card-title">Route</span>
+        <span class="model-chip" title="Anthropic Claude">claude-sonnet-4-5</span>
+      </div>
+      <div id="route-length">— km</div>
+      <div id="route-bar" aria-hidden="true">
+        <span id="route-bar-perm" class="route-bar-fill route-bar-perm" title="Permanent water"></span>
+        <span id="route-bar-seas" class="route-bar-fill route-bar-seas" title="Seasonal-active water"></span>
+      </div>
+      <div id="route-bar-caption">
+        <span id="route-pct-perm">—</span>% permanent /
+        <span id="route-pct-seas">—</span>% seasonal
+      </div>
+      <p id="advisory">
+        Move the slider to query a navigable route around the island
+        for the selected month.
+      </p>
+    </div>
+
+    <details id="claude-input-details">
+      <summary>Input to Claude</summary>
+      <p class="hint">This is exactly what's sent to the API on every request.</p>
+      <dl id="claude-input-dl"></dl>
+    </details>
+
+    <div id="legend">
+      <h2>Legend</h2>
+      <div class="legend-row">
+        <span class="swatch swatch-perm"></span>
+        <span class="legend-label">Permanent water</span>
+        <span class="legend-meta">always navigable</span>
+      </div>
+      <div class="legend-row">
+        <span class="swatch swatch-active"></span>
+        <span class="legend-label">Seasonal — active</span>
+        <span class="legend-meta">open this month</span>
+      </div>
+      <div class="legend-row">
+        <span class="swatch swatch-inactive"></span>
+        <span class="legend-label">Seasonal — inactive</span>
+        <span class="legend-meta">closed this month</span>
+      </div>
+      <div class="legend-row">
+        <span class="line-swatch line-swatch-perm"></span>
+        <span class="legend-label">Route — permanent</span>
+        <span class="legend-meta">this month's path</span>
+      </div>
+      <div class="legend-row">
+        <span class="line-swatch line-swatch-seas"></span>
+        <span class="legend-label">Route — seasonal</span>
+        <span class="legend-meta">caution</span>
+      </div>
+      <div class="legend-row">
+        <span class="pin-swatch"></span>
+        <span class="legend-label">Waypoint</span>
+        <span class="legend-meta">start &amp; end</span>
+      </div>
+    </div>
+
     <button id="recenter">Center on Manaus</button>
   </aside>
 
   <div id="slider-bar">
+    <div id="slider-readout">
+      <div>
+        <span id="active-pct">—</span> of seasonal corridors active
+      </div>
+      <div id="route-readout">
+        route this month: <span id="route-readout-value">—</span>
+      </div>
+    </div>
     <input type="range" id="month-slider" min="1" max="12" step="1" value="3" />
     <div id="slider-ticks">
       <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span>
