@@ -3,7 +3,29 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Amazon River Navigation — Manaus</title>
+  <meta name="theme-color" content="#FAFBF8" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0A1612" media="(prefers-color-scheme: dark)" />
+  <meta name="description" content="VárzeaNav — routes that change with the river, for the eight million people who depend on the Amazon." />
+  <title>VárzeaNav — Amazon seasonal navigation</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem("theme");
+        var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        var theme = stored ? stored : prefersDark ? "dark" : "light";
+        if (theme === "dark") document.documentElement.classList.add("dark");
+      } catch (e) {}
+    })();
+  </script>
+
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
         crossorigin="" />
@@ -13,7 +35,45 @@
   <div id="map"></div>
 
   <aside id="sidebar">
-    <div id="project-mark">Amazon River Navigation</div>
+    <div id="brand">
+      <a id="brand-mark" href="/" aria-label="VárzeaNav home">
+        <svg id="brand-logo" width="28" height="28" viewBox="0 0 100 100" role="img" aria-hidden="true">
+          <defs>
+            <radialGradient id="vn-disk" cx="50%" cy="45%" r="60%">
+              <stop offset="0%"   stop-color="#CDE5C5" />
+              <stop offset="70%"  stop-color="#A8CFA0" />
+              <stop offset="100%" stop-color="#7DB58A" />
+            </radialGradient>
+            <linearGradient id="vn-river-a" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%"   stop-color="#1F5F3F" />
+              <stop offset="100%" stop-color="#0d47a1" />
+            </linearGradient>
+            <linearGradient id="vn-river-b" x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stop-color="#0F2A1D" />
+              <stop offset="100%" stop-color="#1F5F3F" />
+            </linearGradient>
+          </defs>
+          <circle cx="50" cy="50" r="48" fill="url(#vn-disk)" />
+          <circle cx="50" cy="50" r="48" fill="none" stroke="#1F5F3F" stroke-opacity="0.18" stroke-width="1" />
+          <g>
+            <path d="M 8 38 C 28 22, 52 60, 92 30" stroke="url(#vn-river-a)" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.85" />
+            <path d="M 10 70 C 32 92, 60 50, 90 72" stroke="url(#vn-river-b)" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.7" />
+          </g>
+          <g>
+            <path d="M 50 36 C 43 36, 38 41, 38 48 C 38 56, 50 68, 50 68 C 50 68, 62 56, 62 48 C 62 41, 57 36, 50 36 Z" fill="#0F2A1D" />
+            <circle cx="50" cy="48" r="4.5" fill="#FAFBF8" />
+          </g>
+        </svg>
+        <span class="brand-wordmark">Várzea<span class="brand-accent">Nav</span></span>
+      </a>
+
+      <button id="theme-toggle" type="button" aria-label="Toggle theme" aria-pressed="false">
+        <svg class="theme-icon-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        <svg class="theme-icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+
+    <p id="brand-tagline">Amazon seasonal navigation · Manaus</p>
 
     <div id="why-card" class="card">
       <button id="why-dismiss" aria-label="Dismiss">×</button>
