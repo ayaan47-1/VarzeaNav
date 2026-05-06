@@ -1,4 +1,5 @@
 .env
+.env.local
 .venv/
 venv/
 __pycache__/
@@ -13,11 +14,26 @@ htmlcov/
 test-results/
 playwright-report/
 
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+
+# Node
+node_modules/
+
 # /site landing page (Vite/React)
 site/node_modules/
 site/dist/
 site/.vite/
 site/.env.local
+*.tsbuildinfo
+
+# Claude harness — local-only state, never push to public repo
+.claude/worktrees/
+.claude/cache/
+.claude/sessions/
+.claude/settings.local.json
 
 Proto_code.ipynb
 
