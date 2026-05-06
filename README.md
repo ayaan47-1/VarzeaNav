@@ -198,3 +198,7 @@ See the pitch slide. Documented up front, not pretended away.
 
 JRC Global Surface Water v1.4 — Copernicus / European Commission /
 Google Earth Engine. ESRI World Imagery basemap (Maxar, Earthstar Geographics).
+
+## License
+
+Released under the [MIT License](LICENSE).
