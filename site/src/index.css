@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #FAFBF8;
+  --surface: #FFFFFF;
+  --surface-elevated: #F1F5EE;
+  --fg: #0F2A1D;
+  --fg-muted: #4A6B58;
+  --border: #D5E2D2;
+  --accent: #1F5F3F;
+  --accent-soft: #7DB58A;
+  --water-permanent: #0d47a1;
+  --water-active: #4fc3f7;
+  --water-inactive: #888888;
+  --alert: #E04848;
+}
+
+.dark {
+  --bg: #0A1612;
+  --surface: #101F1A;
+  --surface-elevated: #16291F;
+  --fg: #E8F0E5;
+  --fg-muted: #9DB5A4;
+  --border: #1F3A2C;
+  --accent: #7DB58A;
+  --accent-soft: #A8D4B0;
+  --water-permanent: #3E7AC7;
+  --water-active: #5FCCEC;
+  --water-inactive: #9AA0A6;
+  --alert: #FF6B6B;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: theme("fontFamily.sans");
+    font-feature-settings: "ss01", "cv11";
+    transition: background-color 250ms ease, color 250ms ease;
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: var(--surface);
+  }
+
+  *:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+    border-radius: 4px;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+@keyframes river-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.river-swoosh {
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .river-swoosh--anim {
+    animation: river-rotate 60s linear infinite;
+  }
+}
+
+.placeholder-image {
+  background-image:
+    linear-gradient(135deg, transparent 49%, var(--border) 49%, var(--border) 51%, transparent 51%),
+    linear-gradient(45deg, transparent 49%, var(--border) 49%, var(--border) 51%, transparent 51%);
+  background-size: 32px 32px;
+}

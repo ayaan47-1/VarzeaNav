@@ -12,3 +12,9 @@ backend/cache/stats.json
 htmlcov/
 test-results/
 playwright-report/
+
+# /site landing page (Vite/React)
+site/node_modules/
+site/dist/
+site/.vite/
+site/.env.local
