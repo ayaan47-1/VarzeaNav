@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="VárzeaNav">
+  <defs>
+    <radialGradient id="vn-disk" cx="50%" cy="45%" r="60%">
+      <stop offset="0%"   stop-color="#CDE5C5" />
+      <stop offset="70%"  stop-color="#A8CFA0" />
+      <stop offset="100%" stop-color="#7DB58A" />
+    </radialGradient>
+    <linearGradient id="vn-river-a" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#1F5F3F" />
+      <stop offset="100%" stop-color="#0d47a1" />
+    </linearGradient>
+    <linearGradient id="vn-river-b" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#0F2A1D" />
+      <stop offset="100%" stop-color="#1F5F3F" />
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="48" fill="url(#vn-disk)" />
+  <circle cx="50" cy="50" r="48" fill="none" stroke="#1F5F3F" stroke-opacity="0.18" stroke-width="1" />
+  <g>
+    <path d="M 8 38 C 28 22, 52 60, 92 30" stroke="url(#vn-river-a)" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.85" />
+    <path d="M 10 70 C 32 92, 60 50, 90 72" stroke="url(#vn-river-b)" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.7" />
+  </g>
+  <g>
+    <path d="M 50 36 C 43 36, 38 41, 38 48 C 38 56, 50 68, 50 68 C 50 68, 62 56, 62 48 C 62 41, 57 36, 50 36 Z" fill="#0F2A1D" />
+    <circle cx="50" cy="48" r="4.5" fill="#FAFBF8" />
+  </g>
+</svg>
