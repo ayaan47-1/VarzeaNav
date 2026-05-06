@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: varzeanav-backend
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --timeout 600 --preload
+    healthCheckPath: /api/init
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.5
+      - key: ANTHROPIC_API_KEY
+        sync: false
