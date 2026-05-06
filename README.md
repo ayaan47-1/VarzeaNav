@@ -39,6 +39,13 @@ python backend/app.py
 open http://localhost:5050/
 ```
 
+### Running tests
+
+```bash
+pytest                              # unit tests, no network (conftest sets AMAZON_NAV_DEFER_INIT=1)
+pytest tests/test_frontend_e2e.py   # Playwright E2E — needs backend already running on :5050
+```
+
 ## Endpoints
 
 - `GET /` — frontend
@@ -95,8 +102,10 @@ frontend/
   index.html          Map div, slider, sidebar, legend
   app.js              Leaflet init, debounced slider → fetch → render
   style.css           Layout
+tests/                pytest unit tests + Playwright E2E (see conftest.py)
 .claude/launch.json   Claude Preview server config
 .env.example          ANTHROPIC_API_KEY=
+pytest.ini, pyrightconfig.json   Test runner + pyright config
 ```
 
 ## Live demo over the network (optional)
