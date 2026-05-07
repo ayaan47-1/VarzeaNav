@@ -1,0 +1,16 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/api/init", "destination": "https://vertebrae-gory-muzzle.ngrok-free.dev/api/init" },
+    { "source": "/route", "destination": "https://vertebrae-gory-muzzle.ngrok-free.dev/route" },
+    { "source": "/overlay.png", "destination": "https://vertebrae-gory-muzzle.ngrok-free.dev/overlay.png" }
+  ],
+  "headers": [
+    {
+      "source": "/overlay.png",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }]
+    }
+  ]
+}
