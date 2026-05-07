@@ -7,6 +7,7 @@ import { cn } from "../lib/cn";
 const ANCHORS = [
   { href: "#problem", label: "Problem" },
   { href: "#how", label: "How it works" },
+  { href: "#demo", label: "Demo" },
   { href: "#ai", label: "AI" },
   { href: "#roadmap", label: "Roadmap" },
 ] as const;
