@@ -1,7 +1,12 @@
 .env
 .env.local
+.env.production.local
+.env.*.local
 .venv/
 venv/
+
+# Vercel CLI build artifacts (per-machine; never commit)
+.vercel/
 __pycache__/
 *.pyc
 backend/cache/*.tif
@@ -34,6 +39,7 @@ site/.env.local
 .claude/cache/
 .claude/sessions/
 .claude/settings.local.json
+.claude/scheduled_tasks.lock
 
 Proto_code.ipynb
 
