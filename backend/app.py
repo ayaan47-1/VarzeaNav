@@ -35,21 +35,22 @@ CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
 ISLAND_LAT, ISLAND_LON = -3.339, -60.189
 
-# Two fixed waypoints for the A* route, picked specifically because the
-# shortest path between them threads through *seasonal* channels north-south
-# across the island in wet months (~6.5 km, 70% seasonal) and detours the
-# long way through permanent water in dry months (~12.8 km, 0% seasonal).
-# This is the brief's premise: "shortcuts emerge through flooded forest"
-# made visible on the map.
+# Two fixed waypoints for the A* route. North is the town center of
+# Iranduba (a real municipality on the south bank of the Rio Negro,
+# opposite Manaus). South is Vila do Janauacá, a riverside community on
+# Lago Janauacá in the Manaquiri municipality, across the Solimões.
 #
-# Names: the north coord falls inside Iranduba (a real municipality opposite
-# Manaus on the south bank of the Rio Negro). The south coord sits in the
-# Catalão floodplain region across the river. The exact lat/lons are
-# approximations within those areas.
-WAYPOINT_NORTH: tuple[float, float] = (-3.31, -60.20)
-WAYPOINT_SOUTH: tuple[float, float] = (-3.36, -60.20)
+# Both coords are real town centers (on land). routing._snap_to_traversable
+# snaps each to the nearest navigable cell at A* time, so they end up on
+# the closest river/seasonal channel. The diagonal Rio Negro → Solimões
+# crossing forces the route across the main island in wet months (a
+# seasonal-active shortcut through flooded forest) and around it in dry
+# months (a longer permanent-water detour). That seasonal contrast is
+# the demo's hook — "shortcuts emerge through flooded forest."
+WAYPOINT_NORTH: tuple[float, float] = (-3.2847, -60.1861)
+WAYPOINT_SOUTH: tuple[float, float] = (-3.3777, -60.2748)
 WAYPOINT_NORTH_NAME: str = "Iranduba"
-WAYPOINT_SOUTH_NAME: str = "Catalão"
+WAYPOINT_SOUTH_NAME: str = "Vila do Janauacá"
 
 # JRC Global Surface Water v1.4 — monthly history shards
 # Shard 0000320000-0000440000 covers (-70, -10, -60, 0) — same bounds as the
