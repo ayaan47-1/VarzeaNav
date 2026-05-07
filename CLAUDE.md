@@ -70,6 +70,12 @@ Takes a `RouteResult`, not raw pixel stats. System prompt now constrains Claude 
 
 `tests/conftest.py` sets `ANTHROPIC_API_KEY=""` (empty string, *not* `del`) so `load_dotenv(override=False)` in `advisory.py` can't repopulate it from a real `.env` at import. Don't "clean this up" to `monkeypatch.delenv` — the present-but-empty defense is intentional, and `test_advisory.py` has a `fresh_advisory` fixture that also resets `_CLIENT` to `None`.
 
+### Deployment
+
+- **Backend → Render** via [`render.yaml`](render.yaml): `gunicorn app:app --workers 1 --timeout 600 --preload`. `--preload` is required so the heavyweight `load_all()` + 12-PNG render + 12-route compute happens once in the parent before workers fork; otherwise each worker re-downloads 470 MB. Free plan + 1 worker is enough — everything is in-memory after boot.
+- **Frontend → Vercel** via [`frontend/vercel.json`](frontend/vercel.json): static hosting for `frontend/`, with `rewrites` proxying `/api/init`, `/route`, `/overlay.png` to whatever backend URL is configured (currently an ngrok tunnel for the dev box). When you change the backend URL, edit `vercel.json` — there's no env-var indirection.
+- **`site/` is a separate Vite/React/Tailwind landing page** (varzeanav-site), unrelated to `frontend/` (the Leaflet product). Don't confuse the two: `frontend/app.js` is the demo you see when you drag the slider; `site/` is the marketing page.
+
 ## Frontend conventions
 
 - Plain ES + Leaflet from a CDN — no bundler, no npm, no build step. Edit `frontend/app.js` directly.

@@ -158,15 +158,25 @@ backend/
   routing.py          A* shortest-path + Douglas-Peucker simplification
   advisory.py         Claude API integration + stub fallback + build_claude_input
   cache/              Downloaded JRC tiles + 12 pre-rendered PNGs (gitignored)
-frontend/
+frontend/             The Leaflet product (the actual demo)
   index.html          Map div, slider, sidebar, legend
   app.js              Leaflet init, debounced slider → fetch → render
-  style.css           Layout
+  style.css           VárzeaNav-themed layout
+  favicon.svg         App icon
+  vercel.json         Vercel hosting config + backend rewrites
+site/                 Separate Vite/React/Tailwind landing page (marketing)
 tests/                pytest unit tests + Playwright E2E (see conftest.py)
-.claude/launch.json   Claude Preview server config
+render.yaml           Backend deployment to Render (gunicorn --preload)
+LICENSE               MIT
 .env.example          ANTHROPIC_API_KEY=
 pytest.ini, pyrightconfig.json   Test runner + pyright config
 ```
+
+## Deployment
+
+- **Backend** → Render via [`render.yaml`](render.yaml): runs `gunicorn app:app --workers 1 --timeout 600 --preload`. The `--preload` flag is what makes this fit on the free plan: `load_all()`, the 12-PNG render, and the 12-route A* compute all happen once in the parent before workers fork, so we don't re-download 470 MB per worker.
+- **Frontend** → Vercel via [`frontend/vercel.json`](frontend/vercel.json): static hosting for the Leaflet app, with `rewrites` proxying `/api/init`, `/route`, and `/overlay.png` to the backend URL. Update `vercel.json` when the backend URL changes.
+- **Landing page** (`site/`) is a separate Vite/React/Tailwind project deployed independently.
 
 ## Live demo over the network (optional)
 

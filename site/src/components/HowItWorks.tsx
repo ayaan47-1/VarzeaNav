@@ -20,14 +20,14 @@ const chips: readonly ChipDef[] = [
   },
   {
     label: "Seasonal — inactive",
-    desc: "Seasonal pixel, no water observed this month. Renders faintly.",
-    swatch: "var(--water-inactive)",
+    desc: "Seasonal pixel, no water observed this month. Doesn't render — context only.",
+    swatch: null,
+    faded: true,
   },
   {
     label: "Rarely inundated",
-    desc: "Floods only in extreme years. Doesn't render — context only.",
-    swatch: null,
-    faded: true,
+    desc: "Floods only in extreme years. Renders faintly.",
+    swatch: "var(--water-rare)",
   },
   {
     label: "Land",
@@ -134,7 +134,7 @@ export function HowItWorks() {
         >
           When the slider moves, the backend reclassifies the pixels for that
           month, recomputes corridor stats north and south of the island
-          midpoint, and asks Claude for a 2–3 sentence advisory.
+          midpoint, and asks Claude for a one-sentence advisory.
         </motion.p>
       </div>
     </section>

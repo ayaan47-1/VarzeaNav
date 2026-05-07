@@ -56,8 +56,8 @@ export function UseOfAI() {
             </p>
             <p className="font-mono text-sm md:text-[0.95rem] text-fg leading-relaxed">
               "You are an Amazon river navigation advisor for municipal
-              logistics. Write 2-3 sentences. No bullet points, no headings,
-              no AI disclaimers."
+              logistics. Write ONE sentence (max 25 words). No bullet points,
+              no headings, no AI disclaimers, no caveats."
             </p>
           </motion.div>
         </motion.div>
