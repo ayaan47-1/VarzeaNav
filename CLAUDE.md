@@ -88,5 +88,5 @@ Takes a `RouteResult`, not raw pixel stats. System prompt now constrains Claude 
 ## Pointers
 
 - User-level memory: `~/.claude/projects/-Users-ayaan-Projects-Claude-Builder-Club-Hackathon/memory/` (team, project status, integration philosophy).
-- `Proto_code.ipynb` at the repo root is the notebook the backend was extracted from — read it for the numeric thresholds (`occ > 90` ⇒ permanent, `monthly == 2` ⇒ water observed that month).
+- Numeric thresholds (originally validated against the prototype notebook, since removed from the repo): `occ > 90` ⇒ permanent water, `monthly == 2` ⇒ water observed that month. These live in `backend/jrc_data.py::classify`.
 - `pyrightconfig.json` points pyright at `backend/` with the local `.venv`.
