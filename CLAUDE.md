@@ -23,7 +23,7 @@ The app has a **strict deterministic-data / Claude-only-prose** boundary. Number
 ```
 jrc_data.load_all()       # downloads JRC tiles, populates module-level OCCURRENCE/MONTHLY/TRANSFORM/BOUNDS/SHAPE
 overlay_png.render_all()  # pre-renders 12 transparent RGBA PNGs into backend/cache/, served by /overlay.png
-routing.compute_route() x 12  # A* shortest-path between WAYPOINT_NORTH (Iranduba, -3.31,-60.20) and WAYPOINT_SOUTH (Catalão, -3.36,-60.20)
+routing.compute_route() x 12  # A* shortest-path between WAYPOINT_NORTH (Iranduba, -3.2847,-60.1861) and WAYPOINT_SOUTH (Vila do Janauacá, -3.3777,-60.2748)
                               # for each month; results cached in app.ROUTES
 ```
 
@@ -51,7 +51,7 @@ Frontend never sees the 5-class GeoJSON visually — it's an invisible interacti
 
 Pure numpy + `heapq`. No new deps. `RouteResult` is a frozen dataclass with `coords` (lat,lon list), `segments` (per-class GeoJSON-ready dicts with `length_km`), and aggregate stats (`length_km`, `permanent_km`, `seasonal_km`, `longest_seasonal_segment_km`). Splits the path into same-class runs so the frontend can draw permanent water as solid lines and seasonal-active as dashed.
 
-Two waypoints are fixed (`WAYPOINT_NORTH/SOUTH` in `app.py`) — chosen specifically so the wet-month shortcut threads through flooded seasonal forest (~6.5 km) and the dry-month detour goes the long way through permanent channels (~12.8 km). That's the demo's hook.
+Two waypoints are fixed (`WAYPOINT_NORTH/SOUTH` in `app.py`) — Iranduba town center on the north bank of the Rio Negro and Vila do Janauacá on Lago Janauacá to the south. Both are real town centers (on land); routing's `_snap_to_traversable` snaps each to the nearest navigable cell. The diagonal Rio Negro → Solimões crossing forces the wet-month shortcut through flooded seasonal forest across the main island and the dry-month detour the long way through permanent channels. That's the demo's hook.
 
 ### Advisory (`backend/advisory.py`)
 

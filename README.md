@@ -94,8 +94,8 @@ pytest tests/test_frontend_e2e.py   # Playwright E2E — needs backend already r
         "percent_permanent": 0.348, "percent_seasonal": 0.652,
         "longest_seasonal_segment_km": 3.8
       },
-      "start": [-3.31, -60.20],
-      "end":   [-3.36, -60.20]
+      "start": [-3.2847, -60.1861],
+      "end":   [-3.3777, -60.2748]
     }
   }
   ```
